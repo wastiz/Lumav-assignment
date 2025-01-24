@@ -1,0 +1,33 @@
+{
+  "category": {
+    "parent-selector": ".categories-widget",
+    "selector": ".category-link",
+    "attribute": "href"
+  },
+  "popular-category":{
+    "parent-selector": ".pagebuilder-column-line",
+    "selector": "a",
+    "attribute": "href"
+  },
+  "product": {
+    "item": {
+      "selector": ".product-item-info"
+    },
+    "image": {
+      "selector": ".product-image-photo",
+      "attribute": "src"
+    },
+    "title": {
+      "selector": ".product-item-link",
+      "attribute": "title"
+    },
+    "url": {
+      "selector": ".product-item-link",
+      "attribute": "href"
+    },
+    "price": {
+      "selector": ".price",
+      "attribute": "text"
+    }
+  }
+}

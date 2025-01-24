@@ -8,6 +8,8 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 $urlFile = 'url.txt';
 $url = file($urlFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)[0];
+$configFile = 'selectors.json';
+$config = json_decode(file_get_contents($configFile), true);
 
 if (!$url) {
     echo json_encode(['error' => 'URL list is empty']);
