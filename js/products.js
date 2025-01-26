@@ -22,10 +22,6 @@ if (!categoryUrl) {
 
                 totalLoaded += products.length;
                 currentPage++;
-
-                if (products.length === 0 || totalLoaded >= 100) {
-                    document.getElementById('load-more').style.display = 'none';
-                }
             })
             .catch(error => {
                 console.error('Error fetching products:', error);

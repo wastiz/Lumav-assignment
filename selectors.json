@@ -6,7 +6,8 @@
     "attribute": "href"
   },
   "popular-category":{
-    "parent-selector": ".pagebuilder-column-line",
+    "parent-tag": "div",
+    "parent-selector": "data-content-type",
     "selector": "a",
     "attribute": "href"
   },

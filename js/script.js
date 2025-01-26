@@ -7,6 +7,7 @@ function fetchCategories() {
             } else {
                 allCategories = data;
                 displayCategories(allCategories);
+                getCategoriesCount(allCategories)
             }
         })
         .catch(error => {
@@ -23,6 +24,7 @@ function fetchPopularCategories(){
             } else {
                 allCategories = data;
                 displayCategories(allCategories);
+                getCategoriesCount(allCategories);
             }
         })
         .catch(error => console.error('Error:', error));
@@ -37,64 +39,14 @@ function fetchProductsFrontPage () {
                 document.getElementById('content-container').innerHTML = `<p>${products.error}</p>`;
                 return;
             }
+            allCategories = products
             displayProducts(products)
+            createPriceRangeChart(products)
         })
         .catch(error => {
             console.error('Error fetching products:', error);
             document.getElementById('content-container').innerHTML = `<p>Error fetching products</p>`;
         });
-}
-
-function createCategoryChart(categories) {
-    const totalProducts = categories.reduce((sum, category) => sum + category.count, 0);
-    const chartContainer = document.getElementById('categoryChart');
-    chartContainer.innerHTML = '';  // Очистка старого графика
-
-    categories.forEach(category => {
-        const percentage = (category.count / totalProducts) * 100;
-        const pieSlice = document.createElement('div');
-        pieSlice.classList.add('pie-chart');
-        pieSlice.innerHTML = `<div class="label">${category.name} - ${category.count}</div>`;
-        chartContainer.appendChild(pieSlice);
-    });
-}
-
-function createPriceRangeChart(products) {
-    const priceRanges = { '0-100': 0, '100-500': 0, '500-1000': 0, '1000+': 0 };
-
-    products.forEach(product => {
-        const price = parseFloat(product.price.replace('€', '').replace(',', '.'));
-        if (price <= 100) priceRanges['0-100']++;
-        else if (price <= 500) priceRanges['100-500']++;
-        else if (price <= 1000) priceRanges['500-1000']++;
-        else priceRanges['1000+']++;
-    });
-
-    const chartContainer = document.getElementById('priceRangeChart');
-    chartContainer.innerHTML = '';
-
-    for (let range in priceRanges) {
-        const bar = document.createElement('div');
-        bar.classList.add('bar');
-        bar.style.height = `${priceRanges[range] * 20}px`;
-        bar.innerHTML = `${range}<br>${priceRanges[range]}`;
-        chartContainer.appendChild(bar);
-    }
-}
-
-function createDiscountChart(products) {
-    const discounted = products.filter(product => product.discount > 0);
-
-    const chartContainer = document.getElementById('discountChart');
-    chartContainer.innerHTML = '';
-
-    discounted.forEach(product => {
-        const bar = document.createElement('div');
-        bar.classList.add('bar');
-        bar.style.height = `${product.discount * 10}px`;
-        bar.innerHTML = `${product.title} - ${product.discount}%`;
-        chartContainer.appendChild(bar);
-    });
 }
 
 function displayCategories(categories) {
@@ -132,3 +84,66 @@ function filterCategories() {
     );
     displayCategories(filteredCategories);
 }
+
+function getCategoriesCount(categories) {
+    const card = createChartCard("Category Count");
+
+    const data = document.createElement('p');
+    data.textContent = categories.length;
+
+    card.appendChild(data);
+
+    const chartContainer = document.getElementById('chart-container');
+    chartContainer.innerHTML = ''
+    chartContainer.appendChild(card);
+}
+function createPriceRangeChart(products) {
+    const priceRanges = { '0-100': 0, '100-500': 0, '500-1000': 0, '1000+': 0 };
+
+    products.forEach(product => {
+        const price = parseFloat(product.price.replace('€', '').replace(',', '.'));
+        if (price <= 100) priceRanges['0-100']++;
+        else if (price <= 500) priceRanges['100-500']++;
+        else if (price <= 1000) priceRanges['500-1000']++;
+        else priceRanges['1000+']++;
+    });
+
+    const chartContainer = document.getElementById('chart-container');
+    chartContainer.innerHTML = ''
+    const card = createChartCard("Price ranges")
+
+    for (let range in priceRanges) {
+        const bar = document.createElement('div');
+        bar.classList.add('bar');
+        bar.style.height = `${priceRanges[range] * 20}px`;
+        bar.innerHTML = `${range}<br>${priceRanges[range]}`;
+        card.appendChild(bar);
+    }
+    chartContainer.appendChild(card)
+}
+
+function createDiscountChart(products) {
+    const discounted = products.filter(product => product.discount > 0);
+
+    const chartContainer = document.getElementById('chart-container');
+
+    discounted.forEach(product => {
+        const bar = document.createElement('div');
+        bar.classList.add('bar');
+        bar.style.height = `${product.discount * 10}px`;
+        bar.innerHTML = `${product.title} - ${product.discount}%`;
+        chartContainer.appendChild(bar);
+    });
+}
+
+function createChartCard(name) {
+    const card = document.createElement('div');
+    card.classList.add('chart-card');
+
+    const title = document.createElement('h3');
+    title.textContent = name;
+    card.appendChild(title);
+
+    return card;
+}
+

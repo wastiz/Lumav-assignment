@@ -31,7 +31,7 @@ $dom->loadHTML($html);
 libxml_clear_errors();
 
 $xpath = new DOMXPath($dom);
-$productNodes = $xpath->query("//div[contains(@class, 'products')]//div[contains(@class, 'product-item-info')]");
+$productNodes = $xpath->query("//ol[contains(@class, 'products')]/li[contains(@class, 'product-item')]");
 
 $products = [];
 

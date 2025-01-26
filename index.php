@@ -1,7 +1,7 @@
 <?php
-
 session_start();
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+
+if (!isset($_SESSION['logged_in'])) {
     header('Location: login.php');
     exit();
 }
@@ -27,16 +27,13 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     </div>
 
     <div class="d-flex flex-center mb-20">
-        <input type="text" id="search-bar" placeholder="Search categories..." oninput="filterCategories()" />
+        <input type="text" id="search-bar" placeholder="Search..." oninput="filterCategories()" />
     </div>
 
     <h2>Charts</h2>
 
-    <div id="categoryChart" class="chart"></div>
-    <div id="priceRangeChart" class="chart"></div>
-    <div id="discountChart" class="chart"></div>
-
-    <div id="content-container"></div>
+    <div id="chart-container"></div>
+    <div id="content-container" class="d-flex flex-center"></div>
 </main>
 
 <script src="js/index.js"></script>

@@ -9,11 +9,13 @@
 <body>
 
 <h2>Products in Category</h2>
-<a href="index.php">
-    <button class="btn">Back</button>
-</a>
+<div class="d-flex flex-center mb-20 gap-5">
+    <a href="index.php">
+        <button class="btn">Back</button>
+    </a>
+    <button id="load-more" class="btn" onclick="loadMoreProducts()">Load Next Page</button>
+</div>
 <div id="content-container"></div>
-<button id="load-more" class="btn" onclick="loadMoreProducts()">Load More</button>
 
 <script src="js/products.js"></script>
 <script src="js/script.js"></script>
