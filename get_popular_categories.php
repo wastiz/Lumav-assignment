@@ -29,7 +29,7 @@ libxml_clear_errors();
 
 $xpath = new DOMXPath($dom);
 
-$categoryNodes = $xpath->query("//li[contains(@class, 'category-element')]//div[contains(@class, 'cat-title')]/a");
+$categoryNodes = $xpath->query("//div[@data-content-type]/a");
 $categories = [];
 
 foreach ($categoryNodes as $node) {

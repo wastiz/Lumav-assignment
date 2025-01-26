@@ -1,4 +1,5 @@
 {
+  "url": "https://decora.ee",
   "category": {
     "parent-selector": ".categories-widget",
     "selector": ".category-link",
